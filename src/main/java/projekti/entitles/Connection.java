@@ -6,6 +6,7 @@
 package projekti.entitles;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,5 +19,8 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Connection extends AbstractPersistable<Long> {
+    
+    @OneToOne
+    private User connection;
     
 }
