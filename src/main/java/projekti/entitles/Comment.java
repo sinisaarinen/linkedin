@@ -5,6 +5,7 @@
  */
 package projekti.entitles;
 
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -19,7 +20,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
  */
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-public class Comment extends AbstractPersistable<Long> {
+public class Comment extends AbstractPersistable<Long> implements Comparable<Comment> {
     
     @NotEmpty
     private String content;
@@ -27,4 +28,14 @@ public class Comment extends AbstractPersistable<Long> {
     @OneToOne
     private User commentor;
     
+    private Date date;
+    
+    @Override
+    public int compareTo(Comment comment) {
+        if (this.date.after(comment.date)) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 }

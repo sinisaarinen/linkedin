@@ -33,7 +33,7 @@ public class User extends AbstractPersistable<Long> {
     
     @NotEmpty
     @Size(min = 4, max = 30)
-    private String name;
+    private String fullname;
     
     @NotEmpty
     @Size(min = 4, max = 15)

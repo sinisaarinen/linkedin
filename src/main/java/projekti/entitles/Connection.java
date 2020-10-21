@@ -21,6 +21,10 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class Connection extends AbstractPersistable<Long> {
     
     @OneToOne
-    private User connection;
+    private User sender;
     
+    @OneToOne
+    private User receiver;
+    
+    private boolean connetionAccepted = false;
 }
