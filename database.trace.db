@@ -1,0 +1,12 @@
+2020-10-22 15:46:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE LIKE[*] (ID BIGINT NOT NULL, COMMENT_ID BIGINT, LIKER_ID BIGINT, PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table like (id bigint not null, comment_id bigint, liker_id bigint, primary key (id)) [42001-197]
+2020-10-22 15:47:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE LIKE[*] ADD CONSTRAINT FKK85TODBPUUO0EMFDAFTW1RNU3 FOREIGN KEY (COMMENT_ID) REFERENCES COMMENT "; expected "identifier"; SQL statement:
+alter table like add constraint FKk85todbpuuo0emfdaftw1rnu3 foreign key (comment_id) references comment [42001-197]
+2020-10-22 15:47:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE LIKE[*] ADD CONSTRAINT FKAL6AA6INSCH2IJMJS3EG4JYUP FOREIGN KEY (LIKER_ID) REFERENCES PROFILE "; expected "identifier"; SQL statement:
+alter table like add constraint FKal6aa6insch2ijmjs3eg4jyup foreign key (liker_id) references profile [42001-197]
+2020-10-22 15:47:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE PROFILE_LIKES ADD CONSTRAINT FK71LDO4MGQ6AI9MM5MW5J8OYCM FOREIGN KEY (LIKES_ID) REFERENCES LIKE[*] "; expected "identifier"; SQL statement:
+alter table profile_likes add constraint FK71ldo4mgq6ai9mm5mw5j8oycm foreign key (likes_id) references like [42001-197]

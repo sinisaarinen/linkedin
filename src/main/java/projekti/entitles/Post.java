@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -33,11 +34,11 @@ public class Post extends AbstractPersistable<Long> implements Comparable<Post> 
     
     private Date date;
     
-    @OneToOne
+    @ManyToOne
     private User poster;
     
     @ElementCollection(targetClass = String.class)
-    private List<String> likes = new ArrayList<>();
+    private List<Like> likes = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();

@@ -7,6 +7,7 @@ package projekti.entitles;
 
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -25,8 +26,8 @@ public class Comment extends AbstractPersistable<Long> implements Comparable<Com
     @NotEmpty
     private String content;
     
-    @OneToOne
-    private User commentor;
+    @ManyToOne
+    private User creator;
     
     private Date date;
     

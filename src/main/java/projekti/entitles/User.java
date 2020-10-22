@@ -5,7 +5,10 @@
  */
 package projekti.entitles;
 
+import java.util.List;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -39,4 +42,21 @@ public class User extends AbstractPersistable<Long> {
     @Size(min = 4, max = 15)
     private String profilename;
     
+    @OneToMany
+    private List<Post> posts;
+    
+    @ElementCollection(targetClass = String.class)
+    private List<Connection> connections;
+    
+    @OneToMany
+    private List<ConnectionRequest> connectionRequests;
+    
+    @OneToMany
+    private List<Like> likes;
+    
+    @OneToMany
+    private List<Endorsement> endorsements;
+    
+    @OneToMany
+    private List<Skill> skills;
 }

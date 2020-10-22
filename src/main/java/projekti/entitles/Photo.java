@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -28,13 +29,11 @@ public class Photo extends AbstractPersistable<Long> {
     @OneToOne
     private User owner;
     
-    private boolean setPP = false;
-    
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
-
-    @ElementCollection(targetClass = String.class)
-    private List<String> likes = new ArrayList<>();
+    
+    @Lob
+    private byte[] content;
     
     public void removeComment() {
         Collections.sort(comments);

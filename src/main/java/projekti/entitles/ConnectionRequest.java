@@ -5,27 +5,27 @@
  */
 package projekti.entitles;
 
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+
 /**
  *
  * @author saasini
  */
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-public class Connection extends AbstractPersistable<Long> {
+public class ConnectionRequest extends AbstractPersistable<Long> {
     
     @ManyToOne
     private User sender;
-    
+
     @ManyToOne
     private User receiver;
-    
-    private boolean connetionAccepted = false;
+
+    private Date date;
 }

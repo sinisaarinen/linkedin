@@ -5,27 +5,28 @@
  */
 package projekti.entitles;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+
 /**
  *
  * @author saasini
  */
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-public class Connection extends AbstractPersistable<Long> {
+public class Skill extends AbstractPersistable<Long> {
+    
+    private String skill;
     
     @ManyToOne
-    private User sender;
+    private User user;
     
-    @ManyToOne
-    private User receiver;
-    
-    private boolean connetionAccepted = false;
+    @OneToMany
+    private List<Endorsement> endorsement;
 }
