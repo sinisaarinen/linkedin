@@ -22,7 +22,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
  * @author saasini
  */
 @Entity
-@Table(name = "Profile")
 @Data @AllArgsConstructor @NoArgsConstructor
 public class User extends AbstractPersistable<Long> {
     

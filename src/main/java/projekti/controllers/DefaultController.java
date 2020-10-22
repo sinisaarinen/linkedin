@@ -16,6 +16,11 @@ public class DefaultController {
     
     @Autowired
     private UserService userService;
+    
+    @ModelAttribute
+    private User getUser() {
+        return new User();
+    }
 
     @GetMapping("*")
     public String frontPage(Model model) {
@@ -24,8 +29,11 @@ public class DefaultController {
     }
     
     @PostMapping("/signup")
-    public String signUp(@Valid @ModelAttribute("user") User user, Model model) {
-        model.addAttribute("user", user);
-        return "/";
+    public String signUp(@Valid @ModelAttribute User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            System.out.println("Error");
+        }
+        userService.signUp(user);
+        return "index";
     }
 }

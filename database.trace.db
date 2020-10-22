@@ -308,3 +308,51 @@ alter table like add constraint FKj35osr3kh1hqyyteiulf4evo0 foreign key (post_id
 2020-10-22 19:04:05 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE PROFILE_LIKES ADD CONSTRAINT FK71LDO4MGQ6AI9MM5MW5J8OYCM FOREIGN KEY (LIKES_ID) REFERENCES LIKE[*] "; expected "identifier"; SQL statement:
 alter table profile_likes add constraint FK71ldo4mgq6ai9mm5mw5j8oycm foreign key (likes_id) references like [42001-197]
+2020-10-22 19:23:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE LIKE[*] (ID BIGINT NOT NULL, LIKER_ID BIGINT, POST_ID BIGINT, PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table like (id bigint not null, liker_id bigint, post_id bigint, primary key (id)) [42001-197]
+2020-10-22 19:23:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE LIKE[*] ADD CONSTRAINT FKAL6AA6INSCH2IJMJS3EG4JYUP FOREIGN KEY (LIKER_ID) REFERENCES PROFILE "; expected "identifier"; SQL statement:
+alter table like add constraint FKal6aa6insch2ijmjs3eg4jyup foreign key (liker_id) references profile [42001-197]
+2020-10-22 19:23:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE LIKE[*] ADD CONSTRAINT FKJ35OSR3KH1HQYYTEIULF4EVO0 FOREIGN KEY (POST_ID) REFERENCES POST "; expected "identifier"; SQL statement:
+alter table like add constraint FKj35osr3kh1hqyyteiulf4evo0 foreign key (post_id) references post [42001-197]
+2020-10-22 19:23:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE PROFILE_LIKES ADD CONSTRAINT FK71LDO4MGQ6AI9MM5MW5J8OYCM FOREIGN KEY (LIKES_ID) REFERENCES LIKE[*] "; expected "identifier"; SQL statement:
+alter table profile_likes add constraint FK71ldo4mgq6ai9mm5mw5j8oycm foreign key (likes_id) references like [42001-197]
+2020-10-22 19:45:46 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE LIKE[*] (ID BIGINT NOT NULL, LIKER_ID BIGINT, POST_ID BIGINT, PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table like (id bigint not null, liker_id bigint, post_id bigint, primary key (id)) [42001-197]
+2020-10-22 19:45:46 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE LIKE[*] ADD CONSTRAINT FKAL6AA6INSCH2IJMJS3EG4JYUP FOREIGN KEY (LIKER_ID) REFERENCES PROFILE "; expected "identifier"; SQL statement:
+alter table like add constraint FKal6aa6insch2ijmjs3eg4jyup foreign key (liker_id) references profile [42001-197]
+2020-10-22 19:45:46 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE LIKE[*] ADD CONSTRAINT FKJ35OSR3KH1HQYYTEIULF4EVO0 FOREIGN KEY (POST_ID) REFERENCES POST "; expected "identifier"; SQL statement:
+alter table like add constraint FKj35osr3kh1hqyyteiulf4evo0 foreign key (post_id) references post [42001-197]
+2020-10-22 19:45:46 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE PROFILE_LIKES ADD CONSTRAINT FK71LDO4MGQ6AI9MM5MW5J8OYCM FOREIGN KEY (LIKES_ID) REFERENCES LIKE[*] "; expected "identifier"; SQL statement:
+alter table profile_likes add constraint FK71ldo4mgq6ai9mm5mw5j8oycm foreign key (likes_id) references like [42001-197]
+2020-10-22 19:46:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE LIKE[*] (ID BIGINT NOT NULL, LIKER_ID BIGINT, POST_ID BIGINT, PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table like (id bigint not null, liker_id bigint, post_id bigint, primary key (id)) [42001-197]
+2020-10-22 19:46:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE LIKE[*] ADD CONSTRAINT FKM8E0FCS7SPFWT6DQ20F39LAJC FOREIGN KEY (LIKER_ID) REFERENCES USER "; expected "identifier"; SQL statement:
+alter table like add constraint FKm8e0fcs7spfwt6dq20f39lajc foreign key (liker_id) references user [42001-197]
+2020-10-22 19:46:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE LIKE[*] ADD CONSTRAINT FKJ35OSR3KH1HQYYTEIULF4EVO0 FOREIGN KEY (POST_ID) REFERENCES POST "; expected "identifier"; SQL statement:
+alter table like add constraint FKj35osr3kh1hqyyteiulf4evo0 foreign key (post_id) references post [42001-197]
+2020-10-22 19:46:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE USER_LIKES ADD CONSTRAINT FKB68T65JFD9R824PDQM0I5F7RH FOREIGN KEY (LIKES_ID) REFERENCES LIKE[*] "; expected "identifier"; SQL statement:
+alter table user_likes add constraint FKb68t65jfd9r824pdqm0i5f7rh foreign key (likes_id) references like [42001-197]
+2020-10-22 19:49:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE LIKE[*] (ID BIGINT NOT NULL, LIKER_ID BIGINT, POST_ID BIGINT, PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table like (id bigint not null, liker_id bigint, post_id bigint, primary key (id)) [42001-197]
+2020-10-22 19:49:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE LIKE[*] ADD CONSTRAINT FKM8E0FCS7SPFWT6DQ20F39LAJC FOREIGN KEY (LIKER_ID) REFERENCES USER "; expected "identifier"; SQL statement:
+alter table like add constraint FKm8e0fcs7spfwt6dq20f39lajc foreign key (liker_id) references user [42001-197]
+2020-10-22 19:49:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE LIKE[*] ADD CONSTRAINT FKJ35OSR3KH1HQYYTEIULF4EVO0 FOREIGN KEY (POST_ID) REFERENCES POST "; expected "identifier"; SQL statement:
+alter table like add constraint FKj35osr3kh1hqyyteiulf4evo0 foreign key (post_id) references post [42001-197]
+2020-10-22 19:49:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "ALTER TABLE USER_LIKES ADD CONSTRAINT FKB68T65JFD9R824PDQM0I5F7RH FOREIGN KEY (LIKES_ID) REFERENCES LIKE[*] "; expected "identifier"; SQL statement:
+alter table user_likes add constraint FKb68t65jfd9r824pdqm0i5f7rh foreign key (likes_id) references like [42001-197]

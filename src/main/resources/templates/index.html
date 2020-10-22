@@ -8,9 +8,32 @@
 
         <h1 th:text="${'Hello ' + message}">Welcome to LinkedIn</h1>
 
-        <div><form method="POST" th:action="@{/signup}" th:object="${user}"><label>Username: <input name="username" type="text" th:field="*{username}"/> </label>
-            <label>Password: <input name="password" type="password" th:field="*{password}"/> </label>
-            <label>Full name: <input name="fullname" type="text" th:field="*{fullname}"/> </label>
-            <label>Profile name: <input name="profilename" type="text" th:field="*{profilename}"/> </label><input type="submit" /></form></div>
+                <form action="#" th:action="@{/signup}" th:object="${user}" method="POST">
+            <table>
+                <tr>
+                    <td>Username: </td>
+                    <td><input type="text" th:field="*{username}" /></td>
+                    <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Virheviesti</td>
+                </tr>
+                <tr>
+                    <td>Password: </td>
+                    <td><input type="password" th:field="*{password}" /></td>
+                    <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Virheviesti</td>
+                </tr>
+                <tr>
+                    <td>Full name: </td>
+                    <td><input type="text" th:field="*{fullname}" /></td>
+                    <td th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}">Fullname Virheviesti</td>
+                </tr>
+                <tr>
+                    <td>Profile name: </td>
+                    <td><input type="text" th:field="*{profilename}" /></td>
+                    <td th:if="${#fields.hasErrors('profilename')}" th:errors="*{profilename}">Profile name Virheviesti</td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+            </table>
+        </form>
     </body>
 </html>
