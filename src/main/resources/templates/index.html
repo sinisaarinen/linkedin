@@ -6,8 +6,11 @@
     </head>
     <body>
 
-        <h1 th:text="${'Hello ' + message}">Hello world</h1>
+        <h1 th:text="${'Hello ' + message}">Welcome to LinkedIn</h1>
 
-
+        <div><form method="POST" th:action="@{/signup}" th:object="${user}"><label>Username: <input name="username" type="text" th:field="*{username}"/> </label>
+            <label>Password: <input name="password" type="password" th:field="*{password}"/> </label>
+            <label>Full name: <input name="fullname" type="text" th:field="*{fullname}"/> </label>
+            <label>Profile name: <input name="profilename" type="text" th:field="*{profilename}"/> </label><input type="submit" /></form></div>
     </body>
 </html>

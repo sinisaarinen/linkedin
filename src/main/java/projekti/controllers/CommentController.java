@@ -12,6 +12,6 @@ import org.springframework.stereotype.Controller;
  * @author saasini
  */
 @Controller
-public class UserController {
+public class CommentController {
     
 }

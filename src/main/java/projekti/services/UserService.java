@@ -40,7 +40,12 @@ public class UserService {
         User user = new User(username, password, fullname, profilename, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         userRepository.save(user);
         return true;
-    } 
+    }
+    
+    public boolean signUp(User user) {
+        userRepository.save(user);
+        return true;
+    }
     
     public boolean addPhoto(User owner, byte[] content) {
         Photo photo = new Photo(owner, content);
@@ -48,10 +53,10 @@ public class UserService {
         return true;
     }
     
-    public User findUser(String name) {
-        User user = userRepository.findByName(name);
-        return user;
-    }
+    //public User findUser(String name) {
+        //User user = userRepository.findByName(name);
+        //return user;
+    //}
     
     public boolean addSkill(String name, User user) {
         Skill skill = new Skill(name, user, new ArrayList<>());
