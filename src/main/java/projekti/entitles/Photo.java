@@ -29,14 +29,6 @@ public class Photo extends AbstractPersistable<Long> {
     @OneToOne
     private User owner;
     
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Comment> comments = new ArrayList<>();
-    
     @Lob
     private byte[] content;
-    
-    public void removeComment() {
-        Collections.sort(comments);
-        comments.remove(comments.size() - 1);
-    }
 }

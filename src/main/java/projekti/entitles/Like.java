@@ -24,5 +24,5 @@ public class Like extends AbstractPersistable<Long> {
     private User liker;
     
     @ManyToOne
-    private Comment comment;
+    private Post post;
 }

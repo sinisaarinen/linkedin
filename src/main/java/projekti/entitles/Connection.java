@@ -26,6 +26,4 @@ public class Connection extends AbstractPersistable<Long> {
     
     @ManyToOne
     private User receiver;
-    
-    private boolean connetionAccepted = false;
 }
