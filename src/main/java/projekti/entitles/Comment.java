@@ -29,6 +29,9 @@ public class Comment extends AbstractPersistable<Long> implements Comparable<Com
     @ManyToOne
     private User creator;
     
+    @ManyToOne
+    private Post post;
+    
     private Date date;
     
     @Override

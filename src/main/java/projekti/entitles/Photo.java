@@ -26,7 +26,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Photo extends AbstractPersistable<Long> {
     
-    @OneToOne
+    @OneToOne(mappedBy = "photo")
     private User owner;
     
     @Lob

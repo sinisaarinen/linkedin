@@ -9,6 +9,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projekti.entitles.Comment;
+import projekti.entitles.Post;
 import projekti.entitles.User;
 import projekti.repositories.CommentRepository;
 
@@ -22,9 +23,9 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
     
-    public boolean addComment(User commentor, String content) {
+    public boolean addComment(User commentor, String content, Post post) {
         Date date = new Date(System.currentTimeMillis());
-        Comment comment = new Comment(content, commentor, date);
+        Comment comment = new Comment(content, commentor, post, date);
         commentRepository.save(comment);
         return true;
     }

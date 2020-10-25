@@ -6,9 +6,12 @@
 package projekti.entitles;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -23,6 +26,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
  */
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
+@Table(name="Users")
 public class User extends AbstractPersistable<Long> {
     
     @NotEmpty
@@ -44,7 +48,7 @@ public class User extends AbstractPersistable<Long> {
     @OneToMany
     private List<Post> posts;
     
-    @ElementCollection(targetClass = String.class)
+    @OneToMany
     private List<Connection> connections;
     
     @OneToMany
@@ -58,4 +62,8 @@ public class User extends AbstractPersistable<Long> {
     
     @OneToMany
     private List<Skill> skills;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "photo_id", referencedColumnName = "id")
+    private Photo photo;
 }

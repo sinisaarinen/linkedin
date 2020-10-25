@@ -7,6 +7,7 @@ package projekti.entitles;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
  */
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
+@Table(name="Likes")
 public class Like extends AbstractPersistable<Long> {
     
     @ManyToOne

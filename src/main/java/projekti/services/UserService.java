@@ -37,7 +37,7 @@ public class UserService {
     private EndorsementRepository endorsementRepository;
     
     public boolean signUp(String username, String password, String fullname, String profilename) {
-        User user = new User(username, password, fullname, profilename, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        User user = new User(username, password, fullname, profilename, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null);
         userRepository.save(user);
         return true;
     }
@@ -57,6 +57,11 @@ public class UserService {
         //User user = userRepository.findByName(name);
         //return user;
     //}
+    
+    public User findByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        return user;
+    }
     
     public boolean addSkill(String name, User user) {
         Skill skill = new Skill(name, user, new ArrayList<>());

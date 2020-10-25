@@ -13,6 +13,8 @@ import projekti.entitles.User;
  * @author saasini
  */
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    User findByUsername(String username);
     
    //User findByName (String name); 
 }
