@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>LinkedIn</title>
+    </head>
+    <body>
+
+        <h1 th:text="${'Hello ' + message}">Welcome to LinkedIn</h1>
+
+            <form action="#" th:action="@{/signup}" th:object="${user}" method="POST">
+            <table>
+                <tr>
+                    <td>Username: </td>
+                    <td><input type="text" th:field="*{username}" /></td>
+                    <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Virheviesti</td>
+                </tr>
+                <tr>
+                    <td>Password: </td>
+                    <td><input type="password" th:field="*{password}" /></td>
+                    <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Virheviesti</td>
+                </tr>
+                <tr>
+                    <td>Full name: </td>
+                    <td><input type="text" th:field="*{fullname}" /></td>
+                    <td th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}">Fullname Virheviesti</td>
+                </tr>
+                <tr>
+                    <td>Profile name: </td>
+                    <td><input type="text" th:field="*{profilename}" /></td>
+                    <td th:if="${#fields.hasErrors('profilename')}" th:errors="*{profilename}">Profile name Virheviesti</td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

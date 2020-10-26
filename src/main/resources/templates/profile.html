@@ -6,7 +6,9 @@
     </head>
     <body>
 
-        <h1 th:text="${'Hello ' + message}">Welcome to LinkedIn</h1>
+        <h1 th:text="${'Hello ' + fullname}">Welcome to LinkedIn</h1>
+        
+        <form th:action="@{/logout}" method="POST"><input type="submit" value="logout" /></form>
 
     </body>
 </html>

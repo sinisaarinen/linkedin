@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import projekti.entitles.User;
 import projekti.repositories.UserRepository;
 import projekti.services.UserService;
@@ -33,19 +34,27 @@ public class DefaultController {
         return new User();
     }
 
-    @GetMapping("*")
-    public String frontPage(Model model) {
+    @RequestMapping("/signup")
+    public String signUp(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String username = authentication.getName();
-            System.out.println("username " + username);
             User user = userService.findByUsername(username);
-            System.out.println("User++ " + user);
             model.addAttribute("message", user.getFullname());
         } else {
             model.addAttribute("message", "Anonymous!");
         }
-        return "index";
+        return "signup";
+    }
+    
+    @GetMapping("*")
+    public String frontPage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+           return "redirect:/profile";
+        } else {
+           return "index";
+        }
     }
     
     @PostMapping("/signup")
@@ -60,4 +69,6 @@ public class DefaultController {
         userService.signUp(user.getUsername(), passwordEncoder.encode(user.getPassword()), user.getFullname(), user.getProfilename());
         return "redirect:/profile";
     }
+    
+
 }
