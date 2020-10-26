@@ -30,7 +30,9 @@ public class DefaultController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             String username = authentication.getName();
+            System.out.println("username " + username);
             User user = userService.findByUsername(username);
+            System.out.println("User++ " + user);
             model.addAttribute("message", user.getFullname());
         } else {
             model.addAttribute("message", "Anonymous!");
@@ -43,6 +45,7 @@ public class DefaultController {
         if (bindingResult.hasErrors()) {
             System.out.println("Error");
         }
+        System.out.println(user);
         userService.signUp(user);
         return "index";
     }
