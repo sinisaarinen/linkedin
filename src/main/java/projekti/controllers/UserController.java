@@ -14,4 +14,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class UserController {
     
+    //@GetMapping("/users/{shortname}")
+    //public String userProfile(Model model, @PathVariable String shortname) {
+    
 }

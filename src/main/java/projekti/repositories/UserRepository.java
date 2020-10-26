@@ -15,6 +15,6 @@ import projekti.entitles.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUsername(String username);
-    
+    User findByProfilename(String profilename);
    //User findByName (String name); 
 }
