@@ -7,8 +7,6 @@ package projekti.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import projekti.entitles.Comment;
-import projekti.entitles.Photo;
-
 /**
  *
  * @author saasini

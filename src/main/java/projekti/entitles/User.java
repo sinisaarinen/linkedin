@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -45,6 +46,9 @@ public class User extends AbstractPersistable<Long> {
     @Size(min = 4, max = 15)
     private String profilename;
     
+    @Lob
+    private byte[] photo;
+    
     @OneToMany
     private List<Post> posts;
     
@@ -62,8 +66,4 @@ public class User extends AbstractPersistable<Long> {
     
     @OneToMany
     private List<Skill> skills;
-    
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "photo_id", referencedColumnName = "id")
-    private Photo photo;
 }

@@ -14,4 +14,6 @@ import projekti.entitles.Skill;
  */
 public interface SkillRepository extends JpaRepository<Skill, Long> {
     
+    Skill findBySkill(String skill);
+    
 }

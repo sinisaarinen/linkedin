@@ -9,12 +9,10 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projekti.entitles.Endorsement;
-import projekti.entitles.Photo;
 import projekti.entitles.Skill;
 import projekti.entitles.User;
 import projekti.repositories.ConnectionRepository;
 import projekti.repositories.EndorsementRepository;
-import projekti.repositories.PhotoRepository;
 import projekti.repositories.SkillRepository;
 import projekti.repositories.UserRepository;
 /**
@@ -23,10 +21,7 @@ import projekti.repositories.UserRepository;
  */
 @Service
 public class UserService {
-    
-    @Autowired
-    private PhotoRepository photoRepository;
-    
+
     @Autowired
     private UserRepository userRepository;
     
@@ -37,7 +32,7 @@ public class UserService {
     private EndorsementRepository endorsementRepository;
     
     public boolean signUp(String username, String password, String fullname, String profilename) {
-        User user = new User(username, password, fullname, profilename, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), null);
+        User user = new User(username, password, fullname, profilename, null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         userRepository.save(user);
         return true;
     }
@@ -48,8 +43,8 @@ public class UserService {
     }
     
     public boolean addPhoto(User owner, byte[] content) {
-        Photo photo = new Photo(owner, content);
-        photoRepository.save(photo);
+        owner.setPhoto(content);
+        userRepository.save(owner);
         return true;
     }
     
@@ -64,9 +59,15 @@ public class UserService {
     }
     
     public boolean addSkill(String name, User user) {
-        Skill skill = new Skill(name, user, new ArrayList<>());
-        skillRepository.save(skill);
-        return true;
+        Skill existingSkill = skillRepository.findBySkill(name);
+        if (existingSkill == null) {
+            Skill skill = new Skill(name, user, new ArrayList<>());
+            
+            
+            skillRepository.save(skill);
+            return true;
+        }
+        return false;
     }
     
     public boolean deleteSkill(Skill skill) {
