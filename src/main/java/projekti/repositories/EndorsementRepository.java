@@ -7,11 +7,16 @@ package projekti.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import projekti.entitles.Endorsement;
+import projekti.entitles.Skill;
+import projekti.entitles.User;
+
+import java.util.List;
 
 /**
  *
  * @author saasini
  */
 public interface EndorsementRepository extends JpaRepository<Endorsement, Long>{
-    
+    List<Endorsement> findBySkill(Skill skill);
+
 }

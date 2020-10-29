@@ -13,59 +13,109 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import projekti.entitles.Endorsement;
 import projekti.entitles.Skill;
 import projekti.entitles.User;
 import projekti.repositories.UserRepository;
 import projekti.services.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 /**
  *
  * @author saasini
  */
+
+class SkillCounter {
+    private Skill skill;
+    private Integer count;
+
+    public SkillCounter(Skill skill, Integer count) {
+        this.skill = skill;
+        this.count = count;
+    }
+
+    public Integer getCount() {
+        return this.count;
+    }
+
+    public Skill getSkill() {
+        return this.skill;
+    }
+
+
+}
+
 @Controller
 public class UserController {
     
     @Autowired
     private UserService userService;
     
-    @Autowired
-    private UserRepository userRepository;
-    
     @RequestMapping("/profile")
-    public String profile(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            String username = authentication.getName();
-            System.out.println("username " + username);
-            User user = userService.findByUsername(username);
-            System.out.println("User++ " + user);
-            model.addAttribute("fullname", user.getFullname());
-            model.addAttribute("skills", user.getSkills());
-            System.out.println(user.getSkills());
+    public String profile() {
+        User user = userService.currentUser();
+        String username = user.getUsername();
+
+        if (username != null) {
+            return "redirect:/profile/" + username;
         } else {
-            model.addAttribute("message", "Anonymous!");
+            return "404";
         }
+    }
+
+    @RequestMapping("/profile/{username}")
+    public String profileById(@PathVariable String username, Model model) {
+        User user = userService.getByUsername(username);
+
+        if (user.getId() == userService.currentUser().getId()) {
+            model.addAttribute("isCurrentUser", true);
+            System.out.println("isCurrent");
+        }
+
+        model.addAttribute("fullname", user.getFullname());
+        model.addAttribute("userId", user.getId());
+
+        ArrayList<SkillCounter> skillz = new ArrayList<>();
+
+        for (Skill skill : userService.getSkillsById(user.getId())) {
+            List<Endorsement> endorsements = userService.getEndorsementsBySkill(skill.getId());
+            SkillCounter counter = new SkillCounter(skill, endorsements.size());
+            skillz.add(counter);
+        }
+
+        model.addAttribute("skills", skillz);
+
+
         return "profile";
     }
-    
-    @PostMapping("/addskill")
-    public String addSkill(@RequestParam String skill) {
-        System.out.println("Moi");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            String username = authentication.getName();
-            User user = userService.findByUsername(username);
-            userService.addSkill(skill, user);
-        }
-        System.out.println(skill);
-        return "redirect:/profile";
+
+    @PostMapping("/profile/endorse")
+    public String endorseSkill(@RequestParam String skillId, @RequestParam String username) {
+        System.out.println("Skill " + Long.parseLong(skillId));
+        User user = userService.currentUser();
+        System.out.println("endorser " + user.getId());
+
+        userService.addEndorsement(userService.currentUser(),  Long.parseLong(skillId));
+        return "redirect:/profile/" + username;
     }
     
-    //@GetMapping("/users/{shortname}")
-    //public String userProfile(Model model, @PathVariable String shortname) {
-    
+    @PostMapping("/profile")
+    public String addSkill(@RequestParam String skill) {
+        User user = userService.currentUser();
+        userService.addSkill(skill, user);
+        return "redirect:/profile";
+    }
+
+    @RequestMapping(value="/profile/{id}", method = RequestMethod.DELETE)
+    public String deleteSkill(@PathVariable Long id) {
+        userService.deleteSkill(id);
+        return "redirect:/profile";
+    }
+
+
 }

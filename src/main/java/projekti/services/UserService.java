@@ -6,7 +6,12 @@
 package projekti.services;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import projekti.entitles.Endorsement;
 import projekti.entitles.Skill;
@@ -30,7 +35,34 @@ public class UserService {
     
     @Autowired
     private EndorsementRepository endorsementRepository;
-    
+
+    public User currentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(auth.getName());
+        return user;
+    }
+
+    public boolean isLoggedIn() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUsername(auth.getName());
+
+        if (user == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public Optional<User> getById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user;
+    }
+
+    public User getByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        return user;
+    }
+
     public boolean signUp(String username, String password, String fullname, String profilename) {
         User user = new User(username, password, fullname, profilename, null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         userRepository.save(user);
@@ -60,29 +92,65 @@ public class UserService {
     
     public boolean addSkill(String name, User user) {
         Skill existingSkill = skillRepository.findBySkill(name);
+
         if (existingSkill == null) {
             Skill skill = new Skill(name, user, new ArrayList<>());
-            
-            
             skillRepository.save(skill);
             return true;
         }
+
         return false;
     }
+
+    public List<Skill> getSkills(){
+        List<Skill> skills = skillRepository.findByUser(currentUser());
+        return skills;
+    }
     
-    public boolean deleteSkill(Skill skill) {
-        skillRepository.delete(skill);
+    public boolean deleteSkill(Long id) {
+        skillRepository.deleteById(id);
         return true;
     }
     
-    public boolean addEndorsement(User endorser, Skill skill) {
-        Endorsement endorsement = new Endorsement(endorser, skill);
-        endorsementRepository.save(endorsement);
-        return true;
+    public boolean addEndorsement(User endorser, Long skillId) {
+        Optional<Skill> potentialSkill = skillRepository.findById(skillId);
+
+        if (potentialSkill.isPresent()) {
+            Skill skill = potentialSkill.get();
+            Endorsement endorsement = new Endorsement(endorser, skill);
+            endorsementRepository.save(endorsement);
+            return true;
+        }
+
+        return false;
+    }
+
+    public List<Endorsement> getEndorsementsBySkill(Long id){
+        Optional<Skill> potentialSkill = skillRepository.findById(id);
+
+        if (potentialSkill.isPresent()) {
+            Skill skill = potentialSkill.get();
+            List<Endorsement> endorsements = endorsementRepository.findBySkill(skill);
+            return endorsements;
+        }
+
+        return new ArrayList<>();
     }
     
     public boolean deleteEndorsement(Endorsement endorsement) {
         endorsementRepository.delete(endorsement);
         return true;
+    }
+
+    public List<Skill> getSkillsById(Long id){
+        Optional<User> potentialUser = userRepository.findById(id);
+
+        if (potentialUser.isPresent()) {
+            User user = potentialUser.get();
+            List<Skill> skills = skillRepository.findByUser(user);
+            return skills;
+        }
+
+        return new ArrayList<>();
     }
 }

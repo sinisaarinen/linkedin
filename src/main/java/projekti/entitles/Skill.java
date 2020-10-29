@@ -5,10 +5,10 @@
  */
 package projekti.entitles;
 
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,13 +22,15 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
 public class Skill extends AbstractPersistable<Long> {
-    
+
+
     @NotEmpty
     private String skill;
-    
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
     
-    @OneToMany
-    private List<Endorsement> endorsement;
+    @OneToMany(targetEntity=Endorsement.class, fetch = FetchType.LAZY)
+    private List<Endorsement> endorsements = new ArrayList<>();
 }

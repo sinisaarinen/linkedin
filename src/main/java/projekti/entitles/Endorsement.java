@@ -6,6 +6,7 @@
 package projekti.entitles;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +24,6 @@ public class Endorsement extends AbstractPersistable<Long> {
     private User endorser;
     
     @ManyToOne
+    @JoinColumn(name="skill_id")
     private Skill skill;
 }
