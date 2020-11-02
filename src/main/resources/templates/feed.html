@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>LinkedIn</title>
+</head>
+<body class="text-center">
+<div>
+
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4" >Feed</h1>
+            </div>
+        </div>
+
+    </div>
+
+        <div th:if="${isCurrentUser}">
+            <form action="#" th:action="@{/feed/add}" method="POST" class="input-group mb-3 w-25">
+                <input type="text" name="content" class="form-control" placeholder="Add a new post"/>
+
+                <div class="input-group-append">
+                    <input class="btn btn-outline-secondary" type="submit"/>
+                </div>
+            </form>
+        </div>
+
+
+        <ul class="list-group">
+
+            <li class="list-group-item d-flex justify-content-between align-items-center w-25"
+                th:each="alkio : ${posts}">
+
+                <div class="d-flex">
+                    <span th:text="${alkio.getContent()}">skills</span>
+                </div>
+
+                <div th:if="${isCurrentUser}">
+                    <form action="#" th:action="@{'/feed/{id}'(id=${alkio.getId()})}" th:method="delete"><input
+                            type="submit" value="delete" class="btn btn-danger"/></form>
+                </div>
+                
+                <form action="#"
+                          th:action="@{'/feed/like/{id}'(id=${alkio.getId()})}"
+                          th:method="post">
+                    <input type="submit" value="Like" class="btn btn-success"/>
+                </form>
+
+            </li>
+        </ul>
+    
+</div>
+</body>
+</html>
