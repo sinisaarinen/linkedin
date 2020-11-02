@@ -7,6 +7,7 @@ package projekti.services;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projekti.entitles.Like;
@@ -40,7 +41,8 @@ public class PostService {
         return true;
     }
     
-    public boolean likePost(Post post, User liker) {
+    public boolean likePost(Long postId, User liker) {
+        Optional<Post> post = postRepository.findById(postId);
         Like like = new Like(liker, post);
         likeRepository.save(like);
         return true;
@@ -51,4 +53,12 @@ public class PostService {
         return true;
     }
     
+    public boolean deletePost(Long id) {
+        postRepository.deleteById(id);
+        return true;
+    }
+    
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
+    }
 }

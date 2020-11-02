@@ -116,6 +116,4 @@ public class UserController {
         userService.deleteSkill(id);
         return "redirect:/profile";
     }
-
-
 }
