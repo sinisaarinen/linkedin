@@ -8,6 +8,8 @@ package projekti.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projekti.entitles.Like;
@@ -42,15 +44,48 @@ public class PostService {
     }
     
     public boolean likePost(Long postId, User liker) {
-        Optional<Post> post = postRepository.findById(postId);
-        Like like = new Like(liker, post);
-        likeRepository.save(like);
-        return true;
+        Optional<Post> possiblePost = postRepository.findById(postId);
+
+        if (possiblePost.isPresent()) {
+            Post post = possiblePost.get();
+
+            List<Like> likesByPost = this.getLikesByPost(post.getId());
+            System.out.println("LIKES BY POST " + likesByPost);
+            List<Like> likesByLiker = this.getLikesByLiker(liker.getId());
+            System.out.println("LIKES BY LIKER " + likesByLiker);
+
+            System.out.println("COMMON: " + likesByPost.retainAll(likesByLiker));
+
+
+            Like like = new Like(liker, post);
+            likeRepository.save(like);
+            return true;
+        }
+
+        return false;
     }
     
     public boolean deleteLike(Like like) {
         likeRepository.delete(like);
         return true;
+    }
+
+    public List<Like> getLikesByPost(Long id) {
+        return likeRepository.findByPostId(id);
+    }
+
+    public Post getPostById(Long id) {
+        Optional<Post> possiblePost = postRepository.findById(id);
+        if (possiblePost.isPresent()) {
+            Post post = possiblePost.get();
+            return post;
+        }
+
+        return null;
+    }
+
+    public List<Like> getLikesByLiker(Long id) {
+        return likeRepository.findByLikerId(id);
     }
     
     public boolean deletePost(Long id) {

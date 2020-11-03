@@ -7,10 +7,14 @@ package projekti.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import projekti.entitles.Comment;
+import projekti.entitles.Like;
+
+import java.util.List;
+
 /**
  *
  * @author saasini
  */
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    
+    List<Comment> findByPostId(Long id);
 }

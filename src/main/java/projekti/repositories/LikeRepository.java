@@ -8,10 +8,16 @@ package projekti.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import projekti.entitles.Like;
 
+import java.util.List;
+
 /**
  *
  * @author saasini
  */
 public interface LikeRepository extends JpaRepository<Like, Long> {
-    
+    List<Like> findByPostId(Long id);
+    Like findOneByPostId(Long id);
+
+    List<Like> findByLikerId(Long id);
+    Like findOneByLikerId(Long id);
 }
