@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import projekti.entitles.Like;
 
 import java.util.List;
+import projekti.entitles.Post;
+import projekti.entitles.User;
 
 /**
  *
@@ -20,4 +22,6 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
 
     List<Like> findByLikerId(Long id);
     Like findOneByLikerId(Long id);
+    
+    Like findByPostAndLiker(Post post, User liker);
 }

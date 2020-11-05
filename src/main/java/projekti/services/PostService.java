@@ -43,11 +43,18 @@ public class PostService {
         return true;
     }
     
-    public boolean likePost(Long postId, User liker) {
+    public boolean addOrDeleteLike(Long postId, User liker) {
         Optional<Post> possiblePost = postRepository.findById(postId);
 
         if (possiblePost.isPresent()) {
             Post post = possiblePost.get();
+            if (likeRepository.findByPostAndLiker(post, liker) == null) {
+                Like like = new Like(liker, post);
+                likeRepository.save(like);
+            } else {
+                Like like = likeRepository.findByPostAndLiker(post, liker);
+                likeRepository.delete(like);
+            }
 
             List<Like> likesByPost = this.getLikesByPost(post.getId());
             System.out.println("LIKES BY POST " + likesByPost);
@@ -55,10 +62,7 @@ public class PostService {
             System.out.println("LIKES BY LIKER " + likesByLiker);
 
             System.out.println("COMMON: " + likesByPost.retainAll(likesByLiker));
-
-
-            Like like = new Like(liker, post);
-            likeRepository.save(like);
+            
             return true;
         }
 

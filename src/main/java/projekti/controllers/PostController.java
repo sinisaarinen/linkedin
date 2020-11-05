@@ -152,7 +152,7 @@ public class PostController {
     @PostMapping("/feed/like/{id}")
     public String likePost(@PathVariable Long id) {
         User user = userService.currentUser();
-        postService.likePost(id, user);
+        postService.addOrDeleteLike(id, user);
         return "redirect:/feed";
     }
 }
