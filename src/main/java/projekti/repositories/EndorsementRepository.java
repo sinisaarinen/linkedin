@@ -17,6 +17,7 @@ import java.util.List;
  * @author saasini
  */
 public interface EndorsementRepository extends JpaRepository<Endorsement, Long>{
+    
     List<Endorsement> findBySkill(Skill skill);
-
+    Endorsement findBySkillAndEndorser(Skill skill, User endorser);
 }

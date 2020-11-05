@@ -100,7 +100,7 @@ public class UserController {
         User user = userService.currentUser();
         System.out.println("endorser " + user.getId());
 
-        userService.addEndorsement(userService.currentUser(),  Long.parseLong(skillId));
+        userService.addOrDeleteEndorsement(userService.currentUser(),  Long.parseLong(skillId));
         return "redirect:/profile/" + username;
     }
     

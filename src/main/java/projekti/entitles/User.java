@@ -56,7 +56,7 @@ public class User extends AbstractPersistable<Long> {
     private List<Connection> connections;
     
     @OneToMany
-    private List<ConnectionRequest> connectionRequests;
+    private List<Connection> connectionRequests;
     
     @OneToMany
     private List<Like> likes;

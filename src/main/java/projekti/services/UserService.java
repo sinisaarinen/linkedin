@@ -112,13 +112,18 @@ public class UserService {
         return true;
     }
     
-    public boolean addEndorsement(User endorser, Long skillId) {
+    public boolean addOrDeleteEndorsement(User endorser, Long skillId) {
         Optional<Skill> potentialSkill = skillRepository.findById(skillId);
 
         if (potentialSkill.isPresent()) {
             Skill skill = potentialSkill.get();
-            Endorsement endorsement = new Endorsement(endorser, skill);
-            endorsementRepository.save(endorsement);
+            if (endorsementRepository.findBySkillAndEndorser(skill, endorser) == null) {
+                Endorsement endorsement = new Endorsement(endorser, skill);
+                endorsementRepository.save(endorsement);
+            } else {
+                Endorsement endorsement = endorsementRepository.findBySkillAndEndorser(skill, endorser);
+                endorsementRepository.delete(endorsement);
+            }
             return true;
         }
 

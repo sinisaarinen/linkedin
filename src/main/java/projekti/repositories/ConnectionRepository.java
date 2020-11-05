@@ -5,8 +5,10 @@
  */
 package projekti.repositories;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import projekti.entitles.Connection;
+import projekti.entitles.User;
 
 /**
  *
@@ -14,4 +16,7 @@ import projekti.entitles.Connection;
  */
 public interface ConnectionRepository extends JpaRepository<Connection, Long> {
     
+    List<Connection> findBySender (User sender);
+    List<Connection> findByReceiver (User receiver);
+    Connection findBySenderAndReceiver (User sender, User receiver);
 }
