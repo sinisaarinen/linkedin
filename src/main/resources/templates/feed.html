@@ -18,7 +18,7 @@
     </div>
 
         <form action="#" th:action="@{/feed/add}" method="POST" class="input-group mb-3 w-25">
-            <input type="text" name="content" class="form-control" placeholder="Add a new post"/>
+            <input type="text" name="content" class="form-control" placeholder="Add a new post" required="required"/>
 
             <div class="input-group-append">
                 <input class="btn btn-outline-secondary" type="submit"/>
@@ -32,6 +32,7 @@
             th:each="alkio : ${postObjects}">
 
             <div class="d-flex">
+                <span th:text="${alkio.getPost().getPoster().getFullname()}">poster</span>
                 <span th:text="${alkio.getPost().getContent()}">content</span>
                 <span th:text="${alkio.getLikeCount()}">content</span>
                 <form action="#" th:action="@{'/feed/{id}'(id=${alkio.getPost().getId()})}" th:method="delete">
@@ -54,7 +55,7 @@
 
             <form action="#" th:action="@{'/feed/comment/add/{id}'(id=${alkio.getPost().getId()})}" method="POST"
                   class="input-group mb-3 w-25">
-                <input type="text" name="content" class="form-control" placeholder="Add a new post"/>
+                <input type="text" name="content" class="form-control" placeholder="Add a new post" required="required"/>
 
                 <div class="input-group-append">
                     <input class="btn btn-outline-secondary" type="submit"/>
