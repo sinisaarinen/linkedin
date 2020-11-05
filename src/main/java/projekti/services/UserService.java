@@ -108,6 +108,10 @@ public class UserService {
     }
     
     public boolean deleteSkill(Long id) {
+        List<Endorsement> endorsements = endorsementRepository.findOneBySkillId(id);
+        for (Endorsement endorsement: endorsements) {
+            endorsementRepository.delete(endorsement);
+        }
         skillRepository.deleteById(id);
         return true;
     }

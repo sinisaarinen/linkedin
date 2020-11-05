@@ -16,9 +16,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import projekti.entitles.Comment;
 import projekti.entitles.Like;
 import projekti.entitles.Post;
 import projekti.entitles.User;
+import projekti.repositories.CommentRepository;
 import projekti.repositories.LikeRepository;
 import projekti.repositories.PostRepository;
 import projekti.repositories.UserRepository;
@@ -34,6 +36,9 @@ public class PostService {
     
     @Autowired
     private LikeRepository likeRepository;
+    
+    @Autowired
+    private CommentRepository commentRepository;
     
     public boolean addNewPost(User user, String content) {
         Date date = new Date(System.currentTimeMillis());
@@ -97,6 +102,15 @@ public class PostService {
     }
     
     public boolean deletePost(Long id) {
+        List<Comment> comments = commentRepository.findByPostId(id);
+        List<Like> likes = likeRepository.findByPostId(id);
+        for (Comment comment: comments) {
+            System.out.println(comment.getContent());
+            commentRepository.delete(comment);
+        }
+        for (Like like: likes) {
+            likeRepository.delete(like);
+        }
         postRepository.deleteById(id);
         return true;
     }
