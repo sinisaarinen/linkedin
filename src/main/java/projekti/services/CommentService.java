@@ -16,6 +16,7 @@ import projekti.entitles.Comment;
 import projekti.entitles.Post;
 import projekti.entitles.User;
 import projekti.repositories.CommentRepository;
+import projekti.repositories.PostRepository;
 
 /**
  *
@@ -29,6 +30,9 @@ public class CommentService {
 
     @Autowired
     private PostService postService;
+    
+    @Autowired
+    private PostRepository postRepository;
 
     public ArrayList<Comment> getCommentsByPost(Long id) {
         return new ArrayList<>(commentRepository.findByPostId(id));

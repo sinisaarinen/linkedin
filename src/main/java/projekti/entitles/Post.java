@@ -37,9 +37,9 @@ public class Post extends AbstractPersistable<Long> implements Comparable<Post> 
     @ManyToOne
     private User poster;
     
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Like> likes = new ArrayList<>();
-
+    
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
     

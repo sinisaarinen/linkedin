@@ -33,6 +33,7 @@
 
             <div class="d-flex">
                 <span th:text="${alkio.getPost().getPoster().getFullname()}">poster</span>
+                <span th:text="${alkio.getPost().getDate()}">date</span>
                 <span th:text="${alkio.getPost().getContent()}">content</span>
                 <span th:text="${alkio.getLikeCount()}">content</span>
                 <form action="#" th:action="@{'/feed/{id}'(id=${alkio.getPost().getId()})}" th:method="delete">

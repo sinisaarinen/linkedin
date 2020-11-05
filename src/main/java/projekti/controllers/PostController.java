@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +34,7 @@ import projekti.services.UserService;
 class PostObject {
     Post post;
     List<Like> likes;
-    ArrayList<Comment> comments;
+    List<Comment> comments;
     boolean isCurrentUser;
 
     public PostObject() {
@@ -46,7 +50,7 @@ class PostObject {
         this.likes = likes;
     }
 
-    public void setComments(ArrayList<Comment> comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 
@@ -71,7 +75,7 @@ class PostObject {
     }
 
 
-    public ArrayList<Comment> getComments() {
+    public List<Comment> getComments() {
         return this.comments;
     }
 
@@ -94,8 +98,8 @@ public class PostController {
         User user = userService.currentUser();
 
         model.addAttribute("userId", user.getId());
-
-        List<Post> posts = postService.getAllPosts();
+        
+        Page<Post> posts = postService.getAllPosts();
         List<PostObject> postObjects = new ArrayList<>();
 
         for (Post post : posts) {
@@ -108,10 +112,15 @@ public class PostController {
 
             List<Like> likes = postService.getLikesByPost(post.getId());
             postObject.setLikes(likes);
-
+            
             ArrayList<Comment> comments = commentService.getCommentsByPost(post.getId());
             Collections.sort(comments);
-            postObject.setComments(comments);
+            if (comments.size() > 10) {
+                List<Comment> sublist = comments.subList(0, 10);
+                postObject.setComments(sublist);
+            } else {
+                postObject.setComments(comments);
+            }
 
             postObjects.add(postObject);
         }
