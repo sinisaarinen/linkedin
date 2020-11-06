@@ -1,15 +1,17 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <title>LinkedIn</title>
-</head>
+    <head th:replace="fragments/layout :: head" lang="en">
+        <meta charset="UTF-8" />
+        <title>Feed</title>
+    </head>
 <body class="text-center">
 <div>
+    <div th:replace="fragments/layout :: nav"></div>
 
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
 
         <div class="jumbotron jumbotron-fluid">
+            
             <div class="container">
                 <h1 class="display-4">Feed</h1>
             </div>
@@ -17,7 +19,7 @@
 
     </div>
 
-        <form action="#" th:action="@{/feed/add}" method="POST" class="input-group mb-3 w-25">
+        <form action="#" th:action="@{/feed/add}" method="POST" class="input-group mb-3 w-25" style="margin: 0 auto;">
             <input type="text" name="content" class="form-control" placeholder="Add a new post" required="required"/>
 
             <div class="input-group-append">
@@ -28,22 +30,41 @@
 
     <ul class="list-group">
 
-        <li class="list-group-item d-flex justify-content-between align-items-center w-25"
-            th:each="alkio : ${postObjects}">
+        <li class="list-group-item d-flex justify-content-between align-items-center card"
+            th:each="alkio : ${postObjects}" style="width: 600px; margin: 0 auto; margin-bottom: 20px;">
 
-            <div class="d-flex">
-                <span th:text="${alkio.getPost().getPoster().getFullname()}">poster</span>
-                <span th:text="${alkio.getPost().getDate()}">date</span>
-                <span th:text="${alkio.getPost().getContent()}">content</span>
-                <span th:text="${alkio.getLikeCount()}">content</span>
-                <form action="#" th:action="@{'/feed/{id}'(id=${alkio.getPost().getId()})}" th:method="delete">
-                    <input
-                        type="submit" value="delete" class="btn btn-danger"/>
-                </form>
+            <div class="d-flex" style="flex-direction: column; width: 400px;">
+                <div class="d-flex" style="justify-content: space-between;">
+                    <span th:text="${alkio.getPost().getPoster().getFullname()}">poster</span>
+                    <span th:text="${alkio.getPost().getDate()}">date</span>
+                </div>
+                
+                <div style="text-align: left;">
+                    <span th:text="${alkio.getPost().getContent()}">content</span>
+                </div>
+                
+                <div class="d-flex" style="justify-content: space-between;">
+                    <form action="#"
+                      th:action="@{'/feed/like/{id}'(id=${alkio.getPost().getId()})}"
+                      th:method="post">
+                        <input type="submit" value="Like" class="btn btn-success"/>
+                        <span th:text="${alkio.getLikeCount()}">content</span>
+
+                    </form>
+                    
+                    <form action="#" th:action="@{'/feed/{id}'(id=${alkio.getPost().getId()})}" th:method="delete">
+                        <input
+                            type="submit" value="delete" class="btn btn-danger"/>
+                    </form>
+                </div>
+
             </div>
+            
+            <h3>Comments:</h3>
 
             <ul class="list-group">
-                <li th:each="comment : ${alkio.getComments()}">
+                <li th:each="comment : ${alkio.getComments()}" style="margin-bottom: 8px;"  >
+                    <div class="d-flex" style="justify-content: space-between; width: 400px;">
                     <span th:text="${comment.getContent()}">content</span>
                     <div th:if="${comment.getCreator().getId() == userId}" >
                     <form action="#" th:action="@{'/feed/comment/{id}'(id=${comment.getId()})}" th:method="delete">
@@ -51,23 +72,17 @@
                                 type="submit" value="delete" class="btn btn-danger"/>
                     </form>
                     </div>
+                    </div>
                 </li>
             </ul>
 
             <form action="#" th:action="@{'/feed/comment/add/{id}'(id=${alkio.getPost().getId()})}" method="POST"
-                  class="input-group mb-3 w-25">
-                <input type="text" name="content" class="form-control" placeholder="Add a new post" required="required"/>
+                  class="input-group mb-3">
+                <input type="text" name="content" class="form-control" style="width: 320px;" placeholder="Add a new comment" required="required"/>
 
                 <div class="input-group-append">
-                    <input class="btn btn-outline-secondary" type="submit"/>
+                    <input class="btn btn-outline-secondary" value="Add" type="submit"/>
                 </div>
-            </form>
-
-
-            <form action="#"
-                  th:action="@{'/feed/like/{id}'(id=${alkio.getPost().getId()})}"
-                  th:method="post">
-                <input type="submit" value="Like" class="btn btn-success"/>
             </form>
 
 

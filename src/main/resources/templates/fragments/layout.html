@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <title>LinkedIn</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
+          int
+egrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+            crossorigin="anonymous"></script>
+
+</head>
+<body class="text-center">
+<div>
+
+    <nav class="navbar navbar-dark bg-dark static-top" th:fragment="nav">
+        <div class="container">
+            <a class="navbar-brand" href="/">LinkedIn</a>
+            <div>
+            <a class="navbar-brand" href="/feed">Feed</a>
+                        <a class="navbar-brand" href="/profile">Profile</a>
+            </div>
+            <form th:action="@{/logout}" method="POST"><input type="submit" value="logout" class="btn btn-light"/></form>
+
+        </div>
+    </nav>
+</div>
+</body>
+</html>

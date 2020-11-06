@@ -64,13 +64,6 @@ public class PostService {
                 Like like = likeRepository.findByPostAndLiker(post, liker);
                 likeRepository.delete(like);
             }
-
-            List<Like> likesByPost = this.getLikesByPost(post.getId());
-            System.out.println("LIKES BY POST " + likesByPost);
-            List<Like> likesByLiker = this.getLikesByLiker(liker.getId());
-            System.out.println("LIKES BY LIKER " + likesByLiker);
-
-            System.out.println("COMMON: " + likesByPost.retainAll(likesByLiker));
             
             return true;
         }

@@ -21,6 +21,7 @@ import projekti.repositories.UserRepository;
 import projekti.services.UserService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -30,7 +31,7 @@ import java.util.Optional;
  * @author saasini
  */
 
-class SkillCounter {
+class SkillCounter implements Comparable<SkillCounter> {
     private Skill skill;
     private Integer count;
 
@@ -46,8 +47,15 @@ class SkillCounter {
     public Skill getSkill() {
         return this.skill;
     }
-
-
+    
+    @Override
+    public int compareTo(SkillCounter skillCounter) {
+        if (this.count < skillCounter.count) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 }
 
 @Controller
@@ -87,6 +95,7 @@ public class UserController {
             SkillCounter counter = new SkillCounter(skill, endorsements.size());
             skillz.add(counter);
         }
+        Collections.sort(skillz);
 
         model.addAttribute("skills", skillz);
 
