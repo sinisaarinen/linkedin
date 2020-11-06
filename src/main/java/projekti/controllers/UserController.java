@@ -141,8 +141,8 @@ public class UserController {
     }
     
     @GetMapping("/profile/{username}/photo")
-    public ResponseEntity<byte[]> viewPhoto() {
-        User user = userService.currentUser();
+    public ResponseEntity<byte[]> viewPhoto(@PathVariable String username) {
+        User user = userService.getByUsername(username);
         byte[] photo = user.getPhoto();
         final HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=" + user.getUsername() + "-photo");

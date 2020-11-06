@@ -7,6 +7,7 @@ package projekti.entitles;
 
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -47,7 +48,8 @@ public class User extends AbstractPersistable<Long> {
     @Size(min = 4, max = 15)
     private String profilename;
     
-    @Type(type = "org.hibernate.type.BinaryType")
+    @Lob
+    @Column(name = "photo", length = 500000)
     private byte[] photo;
     
     private String photoContentType;
