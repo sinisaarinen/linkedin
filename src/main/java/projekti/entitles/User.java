@@ -48,7 +48,6 @@ public class User extends AbstractPersistable<Long> {
     @Size(min = 4, max = 15)
     private String profilename;
     
-    @Lob
     @Column(name = "photo", length = 500000)
     private byte[] photo;
     
