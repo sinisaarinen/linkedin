@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 /**
@@ -46,8 +47,10 @@ public class User extends AbstractPersistable<Long> {
     @Size(min = 4, max = 15)
     private String profilename;
     
-    @Lob
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] photo;
+    
+    private String photoContentType;
     
     @OneToMany
     private List<Post> posts;

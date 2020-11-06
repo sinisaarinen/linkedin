@@ -5,14 +5,18 @@
  */
 package projekti.services;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import projekti.entitles.Endorsement;
 import projekti.entitles.Skill;
 import projekti.entitles.User;
@@ -64,19 +68,13 @@ public class UserService {
     }
 
     public boolean signUp(String username, String password, String fullname, String profilename) {
-        User user = new User(username, password, fullname, profilename, null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        User user = new User(username, password, fullname, profilename, null, null, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         userRepository.save(user);
         return true;
     }
     
     public boolean signUp(User user) {
         userRepository.save(user);
-        return true;
-    }
-    
-    public boolean addPhoto(User owner, byte[] content) {
-        owner.setPhoto(content);
-        userRepository.save(owner);
         return true;
     }
     
@@ -161,5 +159,17 @@ public class UserService {
         }
 
         return new ArrayList<>();
+    }
+    
+    public void addPhoto(MultipartFile file) throws IOException {
+        if( (file.getContentType().equals("image/jpeg") || 
+                file.getContentType().equals("image/jpg") || 
+                file.getContentType().equals("image/png") ) && 
+                file.getSize() < 10000000 ) {
+            User user = currentUser();
+            user.setPhotoContentType(file.getContentType());
+            user.setPhoto(file.getBytes());
+            userRepository.save(user);            
+        }
     }
 }

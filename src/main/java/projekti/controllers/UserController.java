@@ -5,6 +5,7 @@
  */
 package projekti.controllers;
 
+import java.io.IOException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -25,6 +26,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -98,6 +104,7 @@ public class UserController {
         Collections.sort(skillz);
 
         model.addAttribute("skills", skillz);
+        model.addAttribute("user", user);
 
 
         return "profile";
@@ -124,4 +131,22 @@ public class UserController {
         userService.deleteSkill(id);
         return "redirect:/profile";
     }
+    
+    @PostMapping("/profile/{profilename}/addphoto")
+    public String uploadPhoto(@RequestParam("photo") MultipartFile file) throws IOException {
+        if (file != null) {
+            userService.addPhoto(file);
+        }
+        return "redirect:/profile";
+    }
+    
+    @GetMapping("/profile/{profilename}/photo")
+    public ResponseEntity<byte[]> viewPhoto() {
+        User user = userService.currentUser();
+        byte[] photo = user.getPhoto();
+        final HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=" + user.getUsername() + "-photo");
+        headers.setContentType(MediaType.parseMediaType(user.getPhotoContentType()));
+        return new ResponseEntity<>(photo, headers, HttpStatus.CREATED);
+        }
 }
