@@ -20,7 +20,7 @@
     
         <div th:if="${isCurrentUser}">
                     <p class="lead" >Add or change profile photo:</p>
-                    <form  th:action="@{'/profile/' + ${user.profilename} + '/addphoto'}" method="POST" enctype="multipart/form-data">
+                    <form  th:action="@{'/profile/' + ${user.username} + '/addphoto'}" method="POST" enctype="multipart/form-data">
                         <div class="mt-2 form-group">
                             <input type="file" name="photo" class="mt-2 form-control-file" aria-describedby="filehelp"/>
                             <small id="filehelp" class="form-text text-muted">jpeg, jpg or png, max 10 Mb</small>
@@ -30,7 +30,7 @@
                 </div>
     
     <div class="ml-4 mt-2 mb-2">
-      <img tf:if="${user.profilename != null}" th:src="@{'/profile/' + ${user.profilename} + '/photo'}" th:alt="profilepic" height="300" id="profilepic"/>
+      <img tf:if="${user.username != null}" th:src="@{'/profile/' + ${user.username} + '/photo'}" th:alt="profilepic" height="300" id="profilepic"/>
                     </div>
 
     <div class="d-flex flex-column " style="max-width: 800px; margin: 0 auto; ">

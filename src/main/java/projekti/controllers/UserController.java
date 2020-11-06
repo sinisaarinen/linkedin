@@ -132,7 +132,7 @@ public class UserController {
         return "redirect:/profile";
     }
     
-    @PostMapping("/profile/{profilename}/addphoto")
+    @PostMapping("/profile/{username}/addphoto")
     public String uploadPhoto(@RequestParam("photo") MultipartFile file) throws IOException {
         if (file != null) {
             userService.addPhoto(file);
@@ -140,7 +140,7 @@ public class UserController {
         return "redirect:/profile";
     }
     
-    @GetMapping("/profile/{profilename}/photo")
+    @GetMapping("/profile/{username}/photo")
     public ResponseEntity<byte[]> viewPhoto() {
         User user = userService.currentUser();
         byte[] photo = user.getPhoto();
