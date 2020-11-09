@@ -62,10 +62,12 @@
             
             <h3>Comments:</h3>
 
-            <ul class="list-group">
-                <li th:each="comment : ${alkio.getComments()}" style="margin-bottom: 8px;"  >
-                    <div class="d-flex" style="justify-content: space-between; width: 400px;">
-                    <span th:text="${comment.getContent()}">content</span>
+            <ul class="list-group" style="list-style-type:none;">
+                <li th:each="comment : ${alkio.getComments()}" style="margin-bottom: 8px; "  >
+                    <div class="d-flex" style="width: 400px; justify-content: space-between;">
+                        <div class="d-flex"><strong th:text="${comment.getCreator().getFullname()}">user</strong>:
+                    <span th:text="${comment.getContent()}" style="margin-left: 20px;">content</span>
+                        </div>
                     <div th:if="${comment.getCreator().getId() == userId}" >
                     <form action="#" th:action="@{'/feed/comment/{id}'(id=${comment.getId()})}" th:method="delete">
                         <input

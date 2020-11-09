@@ -38,13 +38,24 @@ public class ConnectionController {
     
     @RequestMapping("/connections")
     public String connections(Model model) {      
+        User user = userService.currentUser();
         List<Connection> connections = connectionService.getConnections(userService.currentUser());
         List<Connection> connectionRequests = connectionService.getConnectionRequests(userService.currentUser());
+        List<User> sentRequests = connectionService.getSentRequests();
         List<User> users = userService.getAllUsers();
+        
+        List<User> usersWithoutCurrent = new ArrayList<>();
+        
+        for (User u : users) {
+            if (u.getId() != user.getId() && !(sentRequests.contains(u))) {
+                usersWithoutCurrent.add(u);
+            }
+        }
         
         model.addAttribute("connections", connections);
         model.addAttribute("connectionRequests", connectionRequests);
-        model.addAttribute("allUsers", userService.getAllUsers());
+        model.addAttribute("allUsers", usersWithoutCurrent);
+        model.addAttribute("user", user);
 
         return "connections";
     }

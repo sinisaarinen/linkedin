@@ -6,55 +6,25 @@
     </head>
 <body class="text-center">
     <div th:replace="fragments/layout :: nav"></div>
+        
+    <div>
+        <h3 class="display-4">Your connections</h3>
+            <div class="row justify-content-center" th:each="connection : ${connections}">  
+                <h4 th:text="${user.getId() == connection.getReceiver().getId() ? connection.getSender().getFullname() : connection.getReceiver().getFullname()}" class="lead align-self-end mr-2">Connections</h4>
+                <div class="input-group justify-content-center">
+                    <form th:action="@{'/profile/' + ${user.getId() == connection.getReceiver().getId() ? connection.getSender().getProfilename() : connection.getReceiver().getProfilename()}}" method="GET">
+                        <button type="submit" class="btn btn-dark ml-2">Open profile</button>
+                    </form>
 
-    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-        <div class="jumbotron jumbotron-fluid">
-            <div class="container">
-                <h1 class="display-4">Connections</h1>
-            </div>
-        </div>
-    </div>
-    
-    <div>
-        <h3 class="mt-4 display-4">Search for new connections</h3>
-                    
-        <div th:if="${!(allUsers == null) || !(allUsers.size() == 0)}" class="container">            
-            <form  th:action="@{/connections}" method="POST">
-                <div class="form-group row">
-                    <input type="text" name="string" class="form-control col-10" placeholder="Search" />
-                    <button type="submit" class="btn btn-dark col-2">Search</button>
+                    <form th:action="@{'/connections/remove/' + ${connection.getId()}}" method="POST">
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
                 </div>
-            </form>            
-        </div>
-        
-        <div th:each="result : ${allUsers}" class="row mt-4 justify-content-center">
-            <span th:text="${result.getFullname()}" class="lead align-self-center mr-2">Name</span>
-            <form th:action="@{'/profile/' + ${result.getProfilename()}}" method="GET" class="mt-2">
-                <button type="submit" class="btn btn-dark">Show profile</button>
-            </form>
-            
-            <form th:action="@{'/connections/send/' + ${result.getId()}}" method="POST">
-                <button type="submit" class="btn btn-dark">Send request</button>
-            </form>
-        </div>
-        
-        <div th:if="${allUsers == null || allUsers.size() == 0}">
-            <span class="font-weight-light align-self-center mr-2">No users found!</span>
-        </div>
+            </div>
     </div>
     
-    <div>
-        <h3 class="display-4">Current connections</h3>
-            <div class="row mt-4 justify-content-center" th:each="connection : ${connections}">  
-                <h6 th:text="${connection.getSender().getFullname()}" class="lead align-self-end mr-2">Connections</h6>
-                <form th:action="@{'/profile/' + ${connection.getSender().getProfilename()}}" method="GET" class="mt-2">
-                    <button type="submit" class="btn btn-dark ml-2">Open profile</button>
-                </form>
-                
-                <form th:action="@{'/connections/remove/' + ${connection.getId()}}" method="POST">
-                        <button type="submit" class="btn btn-danger">Remove</button>
-                </form>
-            </div>
+    <div th:if="${connections == null || connections.size() == 0}">
+        <span class="font-weight-light align-self-center">No new connection requests!</span>
     </div>
     
     <div th:if="${!(connectionRequests == null) || !(connectionRequests.size() == 0)}" class="mb-4">
@@ -62,15 +32,42 @@
         <div class="row  mt-4 justify-content-center" th:each="request : ${connectionRequests}"> 
             <div th:text="${request.getSender().getFullname()}" class="lead mb-2"></div>
                 <div class="input-group justify-content-center">
-                    <form th:action="@{'/connections/accept/' + ${request.getId()}}" method="POST">
-                        <button type="submit" class="btn btn-success">Accept</button>
-                    </form>
-                    
-                    <form th:action="@{'/connections/ignore/' + ${request.getId()}}" method="POST">
-                        <button type="submit" class="btn btn-danger">Ignore</button>
-                    </form>
+                        <form th:action="@{'/connections/accept/' + ${request.getId()}}" method="POST">
+                            <button type="submit" class="btn btn-success">Accept</button>
+                        </form>
+
+                        <form th:action="@{'/connections/ignore/' + ${request.getId()}}" method="POST">
+                            <button type="submit" class="btn btn-danger">Ignore</button>
+                        </form>
                 </div>                
         </div>
     </div>
+    
+        <div th:if="${connectionRequests == null || connectionRequests.size() == 0}">
+            <span class="font-weight-light align-self-center">No new connection requests!</span>
+        </div>
+
+    <div>
+        <h3 class="mt-4 display-4">New users</h3>
+                
+        <div th:each="result : ${allUsers}" class="row mt-4 justify-content-center">
+            <span th:text="${result.getFullname()}" class="lead align-self-center mr-2">Name</span>
+            
+            <div class="input-group justify-content-center">
+                <form th:action="@{'/profile/' + ${result.getProfilename()}}" method="GET">
+                    <button type="submit" class="btn btn-dark">Show profile</button>
+                </form>
+
+                <form th:action="@{'/connections/send/' + ${result.getId()}}" method="POST">
+                    <button type="submit" class="btn btn-dark">Send request</button>
+                </form>
+            </div>
+        </div>
+        
+        <div th:if="${allUsers == null || allUsers.size() == 0}">
+            <span class="font-weight-light align-self-center">No new users found!</span>
+        </div>
+    </div>
+
 </body>
 </html>

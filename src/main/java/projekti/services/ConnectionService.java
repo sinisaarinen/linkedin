@@ -83,6 +83,21 @@ public class ConnectionService {
         return requests;
     }
     
+    public List<User> getSentRequests() {
+        User user = userService.currentUser();
+        List<User> requests = new ArrayList<>();
+        
+        for (Connection connection : connectionRepository.findBySender(user)) {
+                requests.add(connection.getReceiver());
+        }
+        
+        for (Connection connection : connectionRepository.findByReceiver(user)) {
+                requests.add(connection.getSender());
+        }
+        return requests;
+    }
+    
+    
     public List<Connection> getConnections(User user) {
         List<Connection> connections = new ArrayList<>();
         for (Connection connection : connectionRepository.findByReceiver(user)) {
