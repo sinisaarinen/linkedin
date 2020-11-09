@@ -113,6 +113,19 @@ public class ConnectionService {
         return connections;
     }
     
+        public List<Connection> getPendingRequests() {
+        User user = userService.currentUser();
+        
+        List<Connection> connections = new ArrayList<>();
+
+        for (Connection connection : connectionRepository.findBySender(user)) {
+            if (!connection.isAccepted()) {
+                connections.add(connection);
+            }
+        }
+        return connections;
+    }
+    
     public List<User> findNewConnections(String string) {
         User user = userService.currentUser();
         List<User> connectionsFound = new ArrayList<>();

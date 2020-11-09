@@ -42,6 +42,7 @@ public class ConnectionController {
         List<Connection> connections = connectionService.getConnections(userService.currentUser());
         List<Connection> connectionRequests = connectionService.getConnectionRequests(userService.currentUser());
         List<User> sentRequests = connectionService.getSentRequests();
+        List<Connection> pendingRequests = connectionService.getPendingRequests();
         List<User> users = userService.getAllUsers();
         
         List<User> usersWithoutCurrent = new ArrayList<>();
@@ -54,6 +55,7 @@ public class ConnectionController {
         
         model.addAttribute("connections", connections);
         model.addAttribute("connectionRequests", connectionRequests);
+        model.addAttribute("pendingRequests", pendingRequests);
         model.addAttribute("allUsers", usersWithoutCurrent);
         model.addAttribute("user", user);
 

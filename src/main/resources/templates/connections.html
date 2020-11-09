@@ -24,7 +24,7 @@
     </div>
     
     <div th:if="${connections == null || connections.size() == 0}">
-        <span class="font-weight-light align-self-center">No new connection requests!</span>
+        <span class="font-weight-light align-self-center">You have no connections!</span>
     </div>
     
     <div th:if="${!(connectionRequests == null) || !(connectionRequests.size() == 0)}" class="mb-4">
@@ -45,6 +45,23 @@
     
         <div th:if="${connectionRequests == null || connectionRequests.size() == 0}">
             <span class="font-weight-light align-self-center">No new connection requests!</span>
+        </div>
+    
+    
+        <div th:if="${!(pendingRequests == null) || !(pendingRequests.size() == 0)}" class="mb-4">
+        <h3 class="mt-4 display-4">Pending requests</h3>
+        <div class="row  mt-4 justify-content-center" th:each="request : ${pendingRequests}"> 
+            <div th:text="${request.getReceiver().getFullname()}" class="lead mb-2"></div>
+                <div class="input-group justify-content-center">
+                        <form th:action="@{'/connections/ignore/' + ${request.getId()}}" method="POST">
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                </div>                
+        </div>
+    </div>
+    
+        <div th:if="${pendingRequests == null || pendingRequests.size() == 0}">
+            <span class="font-weight-light align-self-center">No pending requests!</span>
         </div>
 
     <div>
