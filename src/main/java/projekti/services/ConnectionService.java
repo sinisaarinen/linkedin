@@ -8,6 +8,7 @@ package projekti.services;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projekti.entitles.Connection;
@@ -23,7 +24,7 @@ import projekti.repositories.UserRepository;
 public class ConnectionService {
     
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
     
     @Autowired
     private ConnectionRepository connectionRepository;
@@ -34,10 +35,14 @@ public class ConnectionService {
         return true;
     }
     
-    public boolean acceptRequest(Connection request) {
-        request.setAccepted(true);
-        connectionRepository.save(request);
-        return true;
+    public void acceptRequest(Long id) {
+        Optional<Connection> potentialRequest = connectionRepository.findById(id);
+        
+        if (potentialRequest.isPresent()) {
+            Connection request = potentialRequest.get();           
+            request.setAccepted(true);
+            connectionRepository.save(request); 
+        }
     }
     
     public boolean cancelRequest(Connection request) {
@@ -45,14 +50,32 @@ public class ConnectionService {
         return true;
     }
     
-    public boolean deleteConnection(Connection connection) {
-        connectionRepository.delete(connection);
-        return true;
+        
+    public void deleteConnection(Long id) {
+        Optional<Connection> potentialConnection = connectionRepository.findById(id);
+        
+        if (potentialConnection.isPresent()){
+            Connection connection = potentialConnection.get();
+            connectionRepository.delete(connection);
+        }  
+    }
+    
+    public void sendRequest(Long id) {
+        Optional<User> potentialUser = userService.getById(id);
+        
+        if (potentialUser.isPresent()){
+            User user = potentialUser.get();
+            
+            Connection connection = new Connection(userService.currentUser(), user, false);
+            connectionRepository.save(connection);
+        }
+        
     }
     
     public List<Connection> getConnectionRequests(User user) {
         List<Connection> requests = new ArrayList<>();
-        for (Connection connection: connectionRepository.findByReceiver(user)) {
+        
+        for (Connection connection : connectionRepository.findByReceiver(user)) {
             if (!connection.isAccepted()){
                 requests.add(connection);
             }
@@ -62,16 +85,30 @@ public class ConnectionService {
     
     public List<Connection> getConnections(User user) {
         List<Connection> connections = new ArrayList<>();
-        for (Connection connection: connectionRepository.findByReceiver(user)) {
-            if (!connection.isAccepted()){
+        for (Connection connection : connectionRepository.findByReceiver(user)) {
+            if (connection.isAccepted()) {
                 connections.add(connection);
             }
         }
-        for (Connection connection: connectionRepository.findBySender(user)) {
-            if (!connection.isAccepted() && !connections.contains(connection)){
+        for (Connection connection : connectionRepository.findBySender(user)) {
+            if (connection.isAccepted() && !connections.contains(connection)) {
                 connections.add(connection);
             }
         }
         return connections;
-    }  
+    }
+    
+    public List<User> findNewConnections(String string) {
+        User user = userService.currentUser();
+        List<User> connectionsFound = new ArrayList<>();
+        
+        for (User u : userService.getAllUsers() ){
+            if ((!user.getConnections().contains(u)) && 
+                    u.getFullname().toLowerCase().contains(string.toLowerCase()) && 
+                    (!u.equals(user))) {
+                connectionsFound.add(u);
+            }
+        }        
+        return connectionsFound;
+    }
 }

@@ -45,6 +45,11 @@ public class UserService {
         User user = userRepository.findByUsername(auth.getName());
         return user;
     }
+    
+    public List<User> getAllUsers() {
+        List<User> allUsers = userRepository.findAll();        
+        return allUsers;
+    }
 
     public boolean isLoggedIn() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
