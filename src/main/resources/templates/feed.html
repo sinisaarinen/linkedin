@@ -52,7 +52,7 @@
 
                     </form>
                     
-                    <div th:if="${isCurrentUser}">
+                    <div th:if="${alkio.getPost().getPoster().getId() == userId}" >
                     <form action="#" th:action="@{'/feed/{id}'(id=${alkio.getPost().getId()})}" th:method="delete">
                         <input
                             type="submit" value="delete" class="btn btn-danger"/>
